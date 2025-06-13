@@ -1,26 +1,510 @@
+
 @import "tailwindcss";
 
+/* 2. Definição das variáveis de cor */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: #F9ECE8;
+  --color-text: #5A3E36;
+  --color-primary: #B57F6D;
+  --color-surface: #FFFFFF;
+  --color-text-on-primary: #FFFFFF;
+  --font-serif: var(--font-playfair);
+  --font-sans: var(--font-inter);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    
+  --color-background: #2C1D18;
+  --color-text: #F9ECE8;
+  --color-primary: #E0AFA0;
+  --color-surface: #412E28;
+  --color-text-on-primary: #2C1D18;
   }
 }
 
+/* 3. Estilos Globais */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}
+
+/* 4. Classes Customizadas Globais */
+
+/* Títulos */
+.section-title {
+  font-family: var(--font-serif);
+  font-size: 3rem; /* 48px */
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Botões da Seção Causas */
+.causes-button {
+  border-radius: 9999px;
+  border: 1px solid var(--color-primary);
+  padding: 0.5rem 1.5rem;
+  transition: background-color 0.2s, color 0.2s;
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+  font-weight: 500;
+}
+.causes-button:hover {
+  opacity: 0.8;
+}
+.causes-button.active {
+  background-color: var(--color-primary);
+  color: var(--color-text-on-primary);
+}
+
+/* Card de Descrição */
+.description-card {
+  margin-top: 2rem;
+  max-width: 42rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-surface);
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+/* Cards da Seção Sintomas */
+.symptom-card {
+  display: flex;
+  height: 6rem; /* 96px */
+  width: 10rem; /* 160px */
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem; /* 12px */
+  border: 1px solid var(--color-primary);
+  text-align: center;
+  transition: transform 0.2s;
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+  font-weight: 500;
+}
+.symptom-card:hover {
+  transform: scale(1.05);
+}
+.symptom-card.highlighted {
+  background-color: var(--color-primary);
+  color: var(--color-text-on-primary);
+}
+
+/* Seção Tratamento */
+.treatment-label {
+  position: absolute;
+  width: 12rem; /* 192px */
+  text-align: center;
+  color: var(--color-primary);
+}
+.treatment-label p:first-child {
+  font-weight: 600;
+}
+.treatment-label p:last-child {
+  font-size: 0.875rem; /* 14px */
+  opacity: 0.8;
+}
+
+.header-background {
+  position: relative;
+  background-image: url('/header-background.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+/* O overlay que escurece a imagem para o texto ficar legível */
+.header-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1; 
+}
+
+/* Card de Explicação Reutilizável (substitui .description-card) */
+.explanation-card {
+  margin-top: 2rem;
+  max-width: 42rem;
+  width: 100%;
+  border-radius: 0.5rem;
+  background-color: var(--color-surface);
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  /* Animação suave para aparecer/desaparecer */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateY(0);
+  opacity: 1;
+}
+.explanation-card.hidden {
+  opacity: 0;
+  transform: translateY(-10px);
+  /* Impede que o card oculto seja clicado ou ocupe espaço */
+  height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+
+/* Seção Tratamento */
+.treatment-label {
+  position: absolute;
+  width: 12rem; /* 192px */
+  text-align: center;
+  color: var(--color-primary);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 2px solid transparent;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+.treatment-label:hover {
+  transform: scale(1.05);
+}
+/* Novo estado 'ativo' para o tratamento selecionado */
+.treatment-label.active {
+  transform: scale(1.05);
+  border-color: var(--color-primary);
+  background-color: color-mix(in srgb, var(--color-primary) 15%, transparent);
+}
+.treatment-label p:first-child {
+  font-weight: 600;
+}
+.treatment-label p:last-child {
+  font-size: 0.875rem; /* 14px */
+  opacity: 0.8;
+}
+/* Estilos para a página de formulário */
+.form-container {
+  width: 100%;
+  max-width: 800px; /* Largura máxima do formulário */
+  background-color: var(--color-surface);
+  border-radius: 0.75rem;
+  overflow: hidden; /* Garante que o iframe não ultrapasse as bordas arredondadas */
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.google-form-iframe {
+  width: 100%;
+  min-height: 80vh; /* Altura mínima, para não ficar muito curto em telas grandes */
+  border: none; /* Remove qualquer borda que o navegador possa adicionar */
+}
+.classification-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+  color: var(--color-text);
+}
+
+.flow-step {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  background-color: color-mix(in srgb, var(--color-primary) 15%, transparent);
+  border: 1px solid var(--color-primary);
+}
+
+.flow-arrow {
+  font-size: 1.5rem;
+  color: var(--color-primary);
+}
+
+.classification-grid {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.left-column, .right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.info-box {
+  padding: 1rem;
+  border: 1px solid var(--color-primary);
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.gold-table {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.gold-table > div {
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: var(--color-surface);
+}
+
+.abcd-chart-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.y-axis-labels-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 250px; /* Mesma altura da grade ABCD */
+  text-align: right;
+}
+
+.y-axis-box {
+  border: 1px solid var(--color-primary);
+  padding: 1rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  width: 170px;
+  background-color: var(--color-surface);
+}
+
+.abcd-grid-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* A classe .abcd-grid e suas pseudo-classes ::before/::after permanecem as mesmas */
+.abcd-grid {
+  grid-area: abcd;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  border: 2px solid var(--color-primary);
+  width: 250px;
+  height: 250px;
+  position: relative;
+}
+.abcd-grid::before { /* Linha vertical */
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  border-left: 1px dashed var(--color-primary);
+}
+.abcd-grid::after { /* Linha horizontal */
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  border-top: 1px dashed var(--color-primary);
+}
+.grid-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 4rem;
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+.symptom-info-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.symptom-info {
+  text-align: center;
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+}
+.side-effects-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Padrão para telas grandes: 3 colunas */
+  gap: 2rem;
+  width: 100%;
+}
+
+.effect-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface);
+  border-radius: 0.75rem; /* 12px */
+  padding: 1.5rem; /* 24px */
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 20%, transparent);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-surface);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 20%, transparent);
+}
+
+.effect-card-title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem; /* 24px */
+  font-weight: bold;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+.effect-info-block {
+  margin-bottom: 1rem;
+}
+
+.effect-info-subtitle {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* Estilos para a lista de efeitos dentro do card */
+.effect-card ul {
+  list-style-type: disc;
+  list-style-position: inside;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem; /* Espaço entre os itens da lista */
+}
+
+/* Deixando os cards responsivos para telas menores */
+@media (max-width: 1536px) { /* Telas de notebooks grandes */
+  .side-effects-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 colunas */
+  }
+}
+
+@media (max-width: 1024px) { /* Tablets na horizontal e notebooks menores */
+  .side-effects-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 colunas */
+  }
+}
+
+@media (max-width: 768px) { /* Tablets na vertical e celulares */
+  .side-effects-grid {
+    grid-template-columns: 1fr; /* 1 coluna */
+  }
+}
+
+/* Estilos para a Seção de Conclusão / Rodapé */
+
+/* globals.css */
+
+/* ... (seus estilos existentes) ... */
+
+
+/* ================================================================ */
+/* Estilos para a Seção de Conclusão / Rodapé */
+/* ================================================================ */
+
+.conclusion-section {
+  width: 100%;
+  margin-top: 6rem; /* 96px */
+  padding-top: 4rem; /* 64px */
+  border-top: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Estilos para a lista com emojis */
+.conclusion-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 500px;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.conclusion-list li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.125rem; /* 18px */
+}
+
+.conclusion-list li span {
+  font-size: 1.5rem; /* Deixa o emoji maior */
+}
+
+/* Grid para os cards dos participantes */
+.participants-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 800px;
+  margin-top: 2rem;
+}
+
+/* Estilo para cada card de participante */
+.participant-card {
+  position: relative; 
+  display: flex; /* Adicionado para ajudar na centralização */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: var(--color-surface);
+  padding: 2rem 1rem; /* Padding vertical maior para compensar a falta da foto */
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 10%, transparent);
+  min-height: 120px; /* Altura mínima para os cards terem tamanhos consistentes */
+}
+
+.participant-name {
+  font-weight: 600;
+  font-size: 1.125rem;
+  color: var(--color-text);
+}
+
+.participant-role {
+  font-size: 0.875rem;
+  color: var(--color-primary);
+}
+
+.participant-card-link {
+  text-decoration: none; /* Remove o sublinhado do link */
+  transition: transform 0.2s ease-in-out;
+}
+
+.participant-card-link:hover {
+  transform: translateY(-5px); /* Efeito de flutuar ao passar o mouse */
+}
+
+/* O card agora tem uma posição relativa para o ícone */
+.participant-card {
+  position: relative; 
+  /* ... (os outros estilos do card continuam os mesmos) ... */
+}
+
+.participant-instagram-icon {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: var(--color-text);
+  opacity: 0.5;
 }
