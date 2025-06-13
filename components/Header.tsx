@@ -26,15 +26,15 @@ const Header = () => {
           <Link href="/" className="hover:underline">Início</Link>
           <span>|</span>
           {/* Links de âncora para rolar a página inicial */}
-          <a href="/#causas" className="hover:underline">Causas</a>
+          <Link href="/#causas" className="hover:underline">Causas</Link>
           <span>|</span>
-          <a href="/#sintomas" className="hover:underline">Sintomas</a>
+          <Link href="/#sintomas" className="hover:underline">Sintomas</Link>
           <span>|</span>
-          <a href="/#tratamento" className="hover:underline">Tratamento</a>
+          <Link href="/#tratamento" className="hover:underline">Tratamento</Link>
           <span>|</span>
-          <a href="/#classificacao" className="hover:underline">Avaliação</a>
+          <Link href="/#classificacao" className="hover:underline">Avaliação</Link>
           <span>|</span>
-          <a href="/#efeitos-colaterais" className="hover:underline">Efeitos Colaterais</a>
+          <Link href="/#efeitos-colaterais" className="hover:underline">Efeitos Colaterais</Link>
           <span>|</span>
           <Link href="/formulario" className="hover:underline">Formulário</Link>
         </nav>

@@ -1,6 +1,5 @@
 // components/ConclusionSection.tsx
 
-import Image from 'next/image'; // Podemos remover este import se não for usado em mais nenhum lugar
 
 // 1. Estrutura de dados simplificada, sem o campo 'imageUrl'
 type Participant = {
@@ -64,19 +63,20 @@ const ConclusionSection = () => {
 
       {/* Seção de Participantes ATUALIZADA */}
       <div className="w-full flex flex-col items-center mt-16">
-        <h3 className="section-title">Participantes</h3>
+        <h3 className="section-title">Participantes do Projeto</h3>
         <div className="participants-grid">
 
+          {/* O .map agora gera apenas o <div> do card, sem o link <a> */}
           {participantsData.map((participant) => (
-            <div>
-              <div className="participant-card">
-                {/* As informações de texto agora estão centralizadas */}
-                <div className="flex flex-col items-center justify-center h-full">
-                  <p className="participant-name">{participant.name}</p>
-                  {participant.role && (
-                    <p className="participant-role mt-1">{participant.role}</p>
-                  )}
-                </div>
+            <div key={participant.id} className="participant-card">
+              {/* Ícone do Instagram foi removido */}
+              
+              {/* Informações de texto centralizadas */}
+              <div className="flex flex-col items-center justify-center h-full">
+                <p className="participant-name">{participant.name}</p>
+                {participant.role && (
+                  <p className="participant-role mt-1">{participant.role}</p>
+                )}
               </div>
             </div>
           ))}
