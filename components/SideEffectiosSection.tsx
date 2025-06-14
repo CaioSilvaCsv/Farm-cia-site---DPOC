@@ -9,7 +9,6 @@ type DrugInfo = {
   contraindication?: string;
   caution?: string | string[]; // Pode ser um texto ou uma lista
   commonAdverseEffect?: string;
-  shortTermEffects?: string[];
   sideEffects?: string[];
 };
 
@@ -18,16 +17,16 @@ const drugClassEffectsData: DrugInfo[] = [
   {
     id: 'beta2',
     name: 'Agonistas Beta-2 Adrenérgicos',
-    contraindication: 'Pessoas com hipersensibilidade à substância.',
-    caution: 'Pacientes com tireotoxicose ou arritmias cardíacas.',
+    contraindication: 'Pessoas com hipersensibilidade  e arritmias cardíacas graves.',
+    caution: 'Pacientes com tireotoxicose, diabetes, e hipertensão não controlada.',
     sideEffects: [ 'Taquicardia', 'Palpitações', 'Tremores' ],
   },
   {
     id: 'muscarinicos',
     name: 'Antagonistas Muscarínicos',
-    contraindication: 'Alergia à atropina ou seus derivados.',
-    caution: [ 'Glaucoma de ângulo fechado', 'Hiperplasia prostática' ],
-    commonAdverseEffect: 'Boca seca',
+    contraindication: 'Pacientes com hipersensibilidade à atropina e retenção urinária grave.',
+    caution: [ 'Glaucoma', 'Pacientes idosos' ],
+    commonAdverseEffect: 'Boca seca, constipação e irritação ocular.',
   },
   {
     id: 'corticosteroides_in',
@@ -44,7 +43,7 @@ const drugClassEffectsData: DrugInfo[] = [
     name: 'Corticosteroides Sistêmicos',
     contraindication: 'Infecções fúngicas sistêmicas.',
     caution: 'Cautela especial: Pacientes com diabetes ou hipertensão arterial.',
-    shortTermEffects: [ 'Insônia', 'Alterações de humor', 'Hiperglicemia' ],
+    sideEffects: [ 'Síndrome de cushing', 'Osteoporose', 'Enfraquecimento do sistema imunológico' ],
   },
 ];
 
@@ -99,20 +98,9 @@ const SideEffectsSection = () => {
               </div>
             )}
 
-            {drug.shortTermEffects && (
-              <div className="effect-info-block">
-                <p className="effect-info-subtitle">Efeitos mesmo em uso curto:</p>
-                <ul>
-                  {drug.shortTermEffects.map((effect, index) => (
-                    <li key={index} className="text-gray-600 dark:text-gray-400">{effect}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
             {drug.sideEffects && (
               <div className="effect-info-block">
-                <p className="effect-info-subtitle">Possíveis efeitos colaterais:</p>
+                <p className="effect-info-subtitle">Efeitos adversos:</p>
                 <ul>
                   {drug.sideEffects.map((effect, index) => (
                     <li key={index} className="text-gray-600 dark:text-gray-400">{effect}</li>
