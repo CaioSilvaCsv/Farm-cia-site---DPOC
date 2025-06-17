@@ -31,7 +31,7 @@ const drugClassEffectsData: DrugInfo[] = [
   {
     id: 'corticosteroides_in',
     name: 'Corticosteroides Inalatórios',
-    important: 'Não são indicados for alívio imediato dos sintomas.',
+    important: 'Não são indicados para o alívio imediato dos sintomas.',
     sideEffects: [
       'Candidíase oral',
       'Rouquidão',
