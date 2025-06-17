@@ -32,8 +32,6 @@ const Header = () => {
           <span>|</span>
           <Link href="/#tratamento" className="hover:underline">Tratamento</Link>
           <span>|</span>
-          <Link href="/#classificacao" className="hover:underline">Avaliação</Link>
-          <span>|</span>
           <Link href="/#efeitos-colaterais" className="hover:underline">Efeitos Colaterais</Link>
           <span>|</span>
           <Link href="/formulario" className="hover:underline">Formulário</Link>
