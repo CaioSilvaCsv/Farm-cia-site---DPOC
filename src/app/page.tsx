@@ -1,5 +1,4 @@
 import CausesSection from "../../components/CausesSection";
-import ClassificationSection from "../../components/ClassificationSection";
 import ConclusionSection from "../../components/ConclusionSection";
 import Header from "../../components/Header";
 import SideEffectsSection from "../../components/SideEffectiosSection";
@@ -28,7 +27,6 @@ export default function HomePage() {
         <CausesSection />
         <SymptomsSection />
         <TreatmentSection/>
-        <ClassificationSection/>
         <SideEffectsSection/>
         <ConclusionSection/>
 
